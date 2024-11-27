@@ -15,7 +15,8 @@ from torch.losses import CTCLoss
 from torch.dataProvider import DataProvider
 from torch.metrics import CERMetric, WERMetric
 from torch.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard, Model2onnx, WarmupCosineDecay
-from mltu.augmentors import RandomAudioNoise, RandomAudioPitchShift, RandomAudioTimeStretch
+
+# from mltu.augmentors import RandomAudioNoise, RandomAudioPitchShift, RandomAudioTimeStretch
 
 from mltu.preprocessors import AudioReader
 from mltu.transformers import LabelIndexer, LabelPadding, AudioPadding
@@ -64,8 +65,7 @@ data_provider = DataProvider(
         AudioReader(sample_rate=16000),
         ],
     transformers=[
-        LabelIndexer(vocab),
-        ],
+        LabelIndexer(vocab),],
     use_cache=False,
     batch_postprocessors=[
         AudioPadding(max_audio_length=configs.max_audio_length, padding_value=0, use_on_batch=True),
@@ -86,7 +86,6 @@ train_dataProvider, test_dataProvider = data_provider.split(split=0.9)
 vocab = sorted(vocab)
 configs.vocab = vocab
 configs.save()
-
 
 class CustomWav2Vec2Model(nn.Module):
     def __init__(self, hidden_states, dropout_rate=0.2, **kwargs):
