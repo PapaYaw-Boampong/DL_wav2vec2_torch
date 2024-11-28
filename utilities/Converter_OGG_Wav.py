@@ -9,7 +9,7 @@ def convert_ogg_to_wav(ogg_path, wav_path):
         print(f"Error converting {ogg_path}: {e}")
 
 ogg_folder = "Datasets/ashant_ogg/fisd-asanti-twi-90p/audios"
-wav_folder = "Datasets/ahshanti_wav/wavs"
+wav_folder = "Datasets/ashanti_wav/wavs"
 
 os.makedirs(wav_folder, exist_ok=True)
 

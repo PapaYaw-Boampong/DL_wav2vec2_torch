@@ -7,7 +7,6 @@ import threading
 import importlib
 import numpy as np
 
-from . import Image
 from annotations.audio import Audio
 from annotations.detections import Detections
 

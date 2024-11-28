@@ -13,15 +13,15 @@ from torch_local.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard, M
 
 # from mltu.augmentors import RandomAudioNoise, RandomAudioPitchShift, RandomAudioTimeStretch
 
-from mltu.preprocessors import AudioReader
-from mltu.transformers import LabelIndexer, LabelPadding, AudioPadding
+from preprocessors import AudioReader
+from transformers import LabelIndexer, LabelPadding, AudioPadding
 from configs import ModelConfigs
 
 
 configs = ModelConfigs()
 
 # Dataset Path
-dataset_path = "Datasets/ahshanti_wav"
+dataset_path = "Datasets/ashanti_wav"
 metadata_path = os.path.join(dataset_path, "data.csv")
 wavs_path = os.path.join(dataset_path, "wavs")
 
