@@ -6,12 +6,27 @@ import matplotlib.pyplot as plt
 import matplotlib
 import logging
 
+
 from mltu.annotations.audio import Audio
 
 """ Implemented Preprocessors:
 - AudioReader - Read audio from path and return audio and label
 - WavReader - Read wav file with librosa and return spectrogram and label
 """
+
+
+
+def import_librosa(object) -> None:
+    """Import librosa using importlib"""
+    try:
+        version = object.librosa.__version__
+    except:
+        version = "librosa version not found"
+        try:
+            object.librosa = importlib.import_module('librosa')
+            print("librosa version:", object.librosa.__version__)
+        except:
+            raise ImportError("librosa is required to augment Audio. Please install it with `pip install librosa`.")
 
 class AudioReader:
     """ Read audio from path and return audio and label

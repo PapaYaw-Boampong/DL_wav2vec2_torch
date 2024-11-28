@@ -42,13 +42,11 @@ class BaseModelConfigs:
 
         return config
 
-
-
 class ModelConfigs(BaseModelConfigs):
     def __init__(self):
         super().__init__()
         self.model_path = os.path.join(
-            "Models/10_wav2vec2_torch",
+            "Models/DL_wav2vec2",
             datetime.strftime(datetime.now(), "%Y%m%d%H%M"),
         )
         self.batch_size = 8
@@ -66,4 +64,4 @@ class ModelConfigs(BaseModelConfigs):
         self.max_audio_length = 246000 
         self.max_label_length = 256
 
-        self.vocab = [' ', "'", 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        self.vocab = [' ', "'", 'a', 'b', 'c', 'd', 'e', 'ɛ', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'ɔ','p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']

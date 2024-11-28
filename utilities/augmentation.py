@@ -3,35 +3,28 @@ import numpy as np
 import importlib
 import logging
 
-from . import Image
+from .. import Image
 from mltu.annotations.audio import Audio
+
 
 def randomness_decorator(func):
     """ Decorator for randomness """
-    def wrapper(self, data: typing.Union[Image, Audio], annotation: typing.Any) -> typing.Tuple[typing.Union[Image, Audio], typing.Any]:
+    def wrapper(self, data: Audio, annotation: typing.Any) -> typing.Tuple[Audio, typing.Any]:
         """ Decorator for randomness and type checking
 
         Args:
-            data (typing.Union[Image, Audio]): Image or Audio object to be adjusted
+            data (Audio): Audio object to be adjusted
             annotation (typing.Any): Annotation to be adjusted
 
         Returns:
-            data (typing.Union[Image, Audio]): Adjusted image or audio
+            data (Audio): Adjusted audio
             annotation (typing.Any): Adjusted annotation
         """
-        # check if image is Image object
-        if not isinstance(data, (Image, Audio)):
-            self.logger.error(f"data must be Image or Audio object, not {type(data)}, skipping augmentor")
-            # TODO instead of error convert image into Image object
-            # TODO instead of error convert audio into Audio object
+        # check if data is Audio object
+        if not isinstance(data, Audio):
+            self.logger.error(f"data must be Audio object, not {type(data)}, skipping augmentor")
             return data, annotation
-
-        if np.random.rand() > self._random_chance:
-            return data, annotation
-
-        # return result of function
         return func(self, data, annotation)
-
     return wrapper
 
 class Augmentor:
@@ -56,15 +49,15 @@ class Augmentor:
         raise NotImplementedError
 
     @randomness_decorator
-    def __call__(self, data: typing.Union[Image, Audio], annotation: typing.Any) -> typing.Tuple[typing.Union[Image, Audio], typing.Any]:
+    def __call__(self,data: Audio, annotation: typing.Any) -> typing.Tuple[ Audio, typing.Any]:
         """ Randomly add noise to audio
 
         Args:
-            data (typing.Union[Image, Audio]): Image or Audio object to be adjusted
+            data Audio: Audio object to be adjusted
             annotation (typing.Any): Annotation to be adjusted
 
         Returns:
-            data (typing.Union[Image, Audio]): Adjusted image or audio
+            data Audio: audio
             annotation (typing.Any): Adjusted annotation if necessary
         """
         data = self.augment(data)
@@ -137,7 +130,6 @@ class RandomAudioPitchShift(Augmentor):
         audio.audio = shift_audio
 
         return audio
-
 
 class RandomAudioTimeStretch(Augmentor):
     """ Randomly add noise to audio

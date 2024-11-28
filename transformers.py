@@ -8,8 +8,8 @@ import importlib
 import numpy as np
 
 from . import Image
-from mltu.annotations.audio import Audio
-from mltu.annotations.detections import Detections
+from annotations.audio import Audio
+from annotations.detections import Detections
 
 """ Implemented Transformers:
 - ExpandDims - Expand dimension of data
@@ -215,75 +215,3 @@ class AudioToSpectrogram(Transformer):
         spectrogram = (spectrogram - np.mean(spectrogram)) / (np.std(spectrogram) + 1e-10)
 
         return spectrogram, label
-
-
-    """Show image for visual inspection
-    """
-    def __init__(
-        self, 
-        verbose: bool = True,
-        log_level: int = logging.INFO,
-        name: str = "Image"
-        ) -> None:
-        """
-        Args:
-            verbose (bool): Whether to log label
-            log_level (int): Logging level (default: logging.INFO)
-            name (str): Name of window to show image
-        """
-        super(ImageShowCV2, self).__init__(log_level=log_level)
-        self.verbose = verbose
-        self.name = name
-        self.thread_started = False
-
-    def init_thread(self):
-        if not self.thread_started:
-            self.thread_started = True
-            self.image_queue = queue.Queue()
-
-            # Start a new thread to display the images, so that the main loop could run in multiple threads
-            self.thread = threading.Thread(target=self._display_images)
-            self.thread.start()
-
-    def _display_images(self) -> None:
-        """ Display images in a continuous loop """
-        while True:
-            image, label = self.image_queue.get()
-            if isinstance(label, Image):
-                cv2.imshow(self.name + "Label", label.numpy())
-            cv2.imshow(self.name, image.numpy())
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
-
-    def __call__(self, image: Image, label: typing.Any) -> typing.Tuple[Image, typing.Any]:
-        """ Show image for visual inspection
-
-        Args:
-            data (np.ndarray): Image data
-            label (np.ndarray): Label data
-        
-        Returns:
-            data (np.ndarray): Image data
-            label (np.ndarray): Label data (unchanged)
-        """
-        # Start cv2 image display thread
-        self.init_thread()
-
-        if self.verbose:
-            if isinstance(label, (str, int, float)):
-                self.logger.info(f"Label: {label}")
-
-        if isinstance(label, Detections):
-            for detection in label:
-                img = detection.applyToFrame(np.asarray(image.numpy()))
-                image.update(img)
-
-        # Add image to display queue
-        # Sleep if queue is not empty
-        while not self.image_queue.empty():
-            time.sleep(0.5)
-
-        # Add image to display queue
-        self.image_queue.put((image, label))
-
-        return image, label
