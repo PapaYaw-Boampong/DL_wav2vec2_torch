@@ -5,18 +5,20 @@ from torch import nn
 from transformers import Wav2Vec2ForCTC
 import torch.nn.functional as F
 
-from torch_local.model import Model
-from torch_local.losses import CTCLoss
-from torch_local.dataProvider import DataProvider
-from torch_local.metrics import CERMetric, WERMetric
-from torch_local.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard, Model2onnx, WarmupCosineDecay
+
+import mltu
+from mltu.torch.model import Model
+from mltu.torch.losses import CTCLoss
+from mltu.torch.dataProvider import DataProvider
+from mltu.torch.metrics import CERMetric, WERMetric
+from mltu.torch.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard, Model2onnx, WarmupCosineDecay
 
 # from mltu.augmentors import RandomAudioNoise, RandomAudioPitchShift, RandomAudioTimeStretch
 
-from preprocessors import AudioReader
-from transformers import LabelIndexer, LabelPadding, AudioPadding
-from configs import ModelConfigs
+from mltu.preprocessors import AudioReader
+from mltu.transformers import LabelIndexer, LabelPadding, AudioPadding
 
+from configs import ModelConfigs
 
 configs = ModelConfigs()
 
