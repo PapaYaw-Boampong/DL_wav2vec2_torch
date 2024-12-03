@@ -8,8 +8,8 @@ def convert_ogg_to_wav(ogg_path, wav_path):
     except subprocess.CalledProcessError as e:
         print(f"Error converting {ogg_path}: {e}")
 
-ogg_folder = "Datasets/ashant_ogg/fisd-asanti-twi-90p/audios"
-wav_folder = "Datasets/ashanti_wav/wavs"
+ogg_folder = "C:/Users/Papa Yaw/OneDrive/Desktop/Year 4/sem1/DeepLearning/Final Project/DL_ASR/Datasets/ashanti_ogg_test/fisd-asanti-twi-10p/audios"
+wav_folder = "C:/Users/Papa Yaw/OneDrive/Desktop/Year 4/sem1/DeepLearning/Final Project/DL_ASR/Datasets/ashanti_wav_test/wavs"
 
 os.makedirs(wav_folder, exist_ok=True)
 

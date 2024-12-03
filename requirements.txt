@@ -1,6 +1,6 @@
-#torch==1.13.1+cu111
-#transformers==4.33.1
-#mltu==1.2.5
-#onnx== 1.17.0
-#onnxruntime
-
+torch==1.13.1+cu111
+transformers==4.33.1
+mltu==1.2.5
+onnx== 1.17.0
+onnxruntime
+mltu
